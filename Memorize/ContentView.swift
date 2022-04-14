@@ -7,20 +7,21 @@
 
 import SwiftUI
 
-func sayHi(name: String) -> String {
-    return "Hi, \(name)"
-}
-
 struct ContentView: View {
-    let emojis = ["😺", "🥷", "🦊", "🧤", "👨🏻‍🦯"]
-    @State var emojiCount = 3
+    let emojiThemes = [
+        ["😀", "😝", "😤", "😕", "😭", "😎", "🫥", "😱"],
+        ["🦧", "🦇", "🐊", "🐌", "🦂", "🐅", "🦬", "🦥", "🐫", "🐍"],
+        ["🏀", "🏓", "🧗‍♂️", "🏈", "🥋", "🥌"]
+    ]
     
+    @State var emojis: [String] = []
     
     var body: some View {
         VStack {
+            Text("Momorize!").font(.largeTitle)
             ScrollView {
                 LazyVGrid(columns: [GridItem(.adaptive(minimum: 100))]) {
-                    ForEach(emojis[0..<emojiCount], id: \.self, content: { emoji in
+                    ForEach(emojis, id: \.self, content: { emoji in
                         CarView(content: emoji)
                             .aspectRatio(2/3, contentMode: .fit)
                     })
@@ -28,32 +29,47 @@ struct ContentView: View {
             }
             Spacer()
             HStack {
-                removeButtom
+                faceThemeButtom
                 Spacer()
-                addButtom
+                animalThemeButtom
+                Spacer()
+                sportThemeButtom
             }
             .font(.largeTitle)
             .padding(.horizontal)
         }
     }
     
-    var removeButtom: some View {
+    var faceThemeButtom: some View {
         Button(action: {
-            if emojiCount > 1 {
-                emojiCount -= 1
-            }
+            emojis = emojiThemes[0].shuffled()
         }, label: {
-            Image(systemName: "minus.circle.fill")
+            VStack {
+                Text("Face").font(.body)
+                Image(systemName: "face.smiling")
+            }
         })
     }
     
-    var addButtom: some View {
+    var animalThemeButtom: some View {
         Button(action: {
-            if emojiCount < emojis.count {
-                emojiCount += 1
-            }
+            emojis = emojiThemes[1].shuffled()
         }, label: {
-            Image(systemName: "plus.circle.fill")
+            VStack{
+                Text("Animal").font(.body)
+                Image(systemName: "pawprint")
+            }
+        })
+    }
+    
+    var sportThemeButtom: some View {
+        Button(action: {
+            emojis = emojiThemes[2].shuffled()
+        }, label: {
+            VStack {
+                Text("Sport").font(.body)
+                Image(systemName: "sportscourt")
+            }
         })
     }
 }
