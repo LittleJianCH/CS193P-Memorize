@@ -8,101 +8,50 @@
 import SwiftUI
 
 struct ContentView: View {
-    let emojiThemes = [
-        ["😀", "😝", "😤", "😕", "😭", "😎", "🫥", "😱"],
-        ["🦧", "🦇", "🐊", "🐌", "🦂", "🐅", "🦬", "🦥", "🐫", "🐍"],
-        ["🏀", "🏓", "🧗‍♂️", "🏈", "🥋", "🥌"]
-    ]
-    
-    @State var emojis: [String] = []
+    @ObservedObject var viewModel: EmojiMemoryGame
     
     var body: some View {
         VStack {
-            Text("Momorize!").font(.largeTitle)
+            Text("Memorize!").font(.largeTitle)
             ScrollView {
-                LazyVGrid(columns: [GridItem(.adaptive(minimum: 100))]) {
-                    ForEach(emojis, id: \.self, content: { emoji in
-                        CarView(content: emoji)
+                LazyVGrid(columns: [GridItem(.adaptive(minimum: 60))]) {
+                    ForEach(viewModel.card) { card in
+                        CardView(card: card)
                             .aspectRatio(2/3, contentMode: .fit)
-                    })
-                }
+                            .onTapGesture {
+                                viewModel.choose(card)
+                            }
+                    }
+                }.padding()
             }
-            Spacer()
-            HStack {
-                faceThemeButtom
-                Spacer()
-                animalThemeButtom
-                Spacer()
-                sportThemeButtom
-            }
-            .font(.largeTitle)
-            .padding(.horizontal)
         }
-    }
-    
-    var faceThemeButtom: some View {
-        Button(action: {
-            emojis = emojiThemes[0].shuffled()
-        }, label: {
-            VStack {
-                Text("Face").font(.body)
-                Image(systemName: "face.smiling")
-            }
-        })
-    }
-    
-    var animalThemeButtom: some View {
-        Button(action: {
-            emojis = emojiThemes[1].shuffled()
-        }, label: {
-            VStack{
-                Text("Animal").font(.body)
-                Image(systemName: "pawprint")
-            }
-        })
-    }
-    
-    var sportThemeButtom: some View {
-        Button(action: {
-            emojis = emojiThemes[2].shuffled()
-        }, label: {
-            VStack {
-                Text("Sport").font(.body)
-                Image(systemName: "sportscourt")
-            }
-        })
     }
 }
 
-struct CarView: View {
-    @State var isFaceUp: Bool = true
-    
-    var content: String
+struct CardView: View {
+    let card: MemoryGame<String>.Card
     
     var body: some View {
         let shape = RoundedRectangle(cornerRadius: 25)
         
         ZStack {
-            if isFaceUp {
+            if card.isFaceUp {
                 shape.fill().foregroundColor(.white)
-                
                 shape.strokeBorder(lineWidth: 3).foregroundColor(.cyan)
-                
-                Text(content).font(.largeTitle)
+                Text(card.content).font(.largeTitle)
+            } else if card.isMatched {
+                shape.opacity(0)
             } else {
                 shape.fill().foregroundColor(.cyan)
             }
-        }
-        .padding()
-        .onTapGesture {
-            isFaceUp = !isFaceUp
         }
     }
 }
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView()
+        let game = EmojiMemoryGame()
+        ContentView(viewModel: game)
             .previewInterfaceOrientation(.portrait)
     }
 }
