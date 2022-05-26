@@ -1,6 +1,6 @@
 //
 //  EmojiMemoryGame.swift
-//  Memorize
+//  CS193P-Memorize
 //
 //  Created by LittleJian on 4/22/22.
 //

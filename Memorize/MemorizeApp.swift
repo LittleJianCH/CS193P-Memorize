@@ -1,6 +1,6 @@
 //
 //  MemorizeApp.swift
-//  Memorize
+//  CS193P-Memorize
 //
 //  Created by LittleJian on 4/2/22.
 //

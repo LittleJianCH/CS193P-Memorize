@@ -16,7 +16,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		8AAA015527F760EE00824096 /* Memorize.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Memorize.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		8AAA015527F760EE00824096 /* CS193P-Memorize.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "CS193P-Memorize.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8AAA015827F760EE00824096 /* MemorizeApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemorizeApp.swift; sourceTree = "<group>"; };
 		8AAA015A27F760EE00824096 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		8AAA015C27F760EE00824096 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -47,7 +47,7 @@
 		8AAA015627F760EE00824096 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				8AAA015527F760EE00824096 /* Memorize.app */,
+				8AAA015527F760EE00824096 /* CS193P-Memorize.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -76,9 +76,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		8AAA015427F760EE00824096 /* Memorize */ = {
+		8AAA015427F760EE00824096 /* CS193P-Memorize */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 8AAA016327F760EE00824096 /* Build configuration list for PBXNativeTarget "Memorize" */;
+			buildConfigurationList = 8AAA016327F760EE00824096 /* Build configuration list for PBXNativeTarget "CS193P-Memorize" */;
 			buildPhases = (
 				8AAA015127F760EE00824096 /* Sources */,
 				8AAA015227F760EE00824096 /* Frameworks */,
@@ -88,9 +88,9 @@
 			);
 			dependencies = (
 			);
-			name = Memorize;
+			name = "CS193P-Memorize";
 			productName = Memorize;
-			productReference = 8AAA015527F760EE00824096 /* Memorize.app */;
+			productReference = 8AAA015527F760EE00824096 /* CS193P-Memorize.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -108,7 +108,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 8AAA015027F760ED00824096 /* Build configuration list for PBXProject "Memorize" */;
+			buildConfigurationList = 8AAA015027F760ED00824096 /* Build configuration list for PBXProject "CS193P-Memorize" */;
 			compatibilityVersion = "Xcode 13.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -121,7 +121,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				8AAA015427F760EE00824096 /* Memorize */,
+				8AAA015427F760EE00824096 /* CS193P-Memorize */,
 			);
 		};
 /* End PBXProject section */
@@ -328,7 +328,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		8AAA015027F760ED00824096 /* Build configuration list for PBXProject "Memorize" */ = {
+		8AAA015027F760ED00824096 /* Build configuration list for PBXProject "CS193P-Memorize" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				8AAA016127F760EE00824096 /* Debug */,
@@ -337,7 +337,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		8AAA016327F760EE00824096 /* Build configuration list for PBXNativeTarget "Memorize" */ = {
+		8AAA016327F760EE00824096 /* Build configuration list for PBXNativeTarget "CS193P-Memorize" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				8AAA016427F760EE00824096 /* Debug */,
