@@ -8,7 +8,9 @@
 import SwiftUI
 
 class EmojiMemoryGame: ObservableObject {
-    static let themes: [Theme<String>] = [
+    typealias Card = MemoryGame<String>.Card
+    
+    private static let themes: [Theme<String>] = [
         Theme(name: "Animals", color: .green, contents: ["🐶", "🐱", "🐭", "🐹", "🐰", "🦊", "🐻", "🐼", "🐨", "🐯", "🦁", "🐮", "🐷", "🐸", "🐵"]),
         Theme(name: "Cars", color: .cyan, contents: ["🚗", "🚕", "🚙", "🚌", "🚎", "🏎", "🚓", "🚑", "🚒", "🚐", "🚚", "🚛", "🚜"]),
         Theme(name: "Faces", color: .yellow, contents: ["😀", "😁", "😂", "😃", "😄", "😅", "😆", "😉", "😊", "😋", "😎", "😍", "😘", "😗", "😙", "😚", "😜", "😝", "😛", "🤑", "🤓", "😏", "😶", "😐", "😑"]),
@@ -20,7 +22,7 @@ class EmojiMemoryGame: ObservableObject {
 
     var state: GameState = .start
 
-    static func createMemoryGame() -> MemoryGame<String> {
+    private static func createMemoryGame() -> MemoryGame<String> {
         let theme = themes.randomElement()!
         let emojis = theme.getContents(number: numberOfPairsOfCards)
         return MemoryGame<String>(number: numberOfPairsOfCards, title: theme.themeName, color: theme.color)
@@ -40,7 +42,7 @@ class EmojiMemoryGame: ObservableObject {
 
     var tapCount: Int { modal.tapCount }
 
-    var card: Array<MemoryGame<String>.Card> { modal.cards }
+    var card: Array<Card> { modal.cards }
     
     var title: String { modal.title }
 
@@ -48,7 +50,7 @@ class EmojiMemoryGame: ObservableObject {
 
     // MARK: - Intent(s)
     
-    func choose(_ card: MemoryGame<String>.Card) {
+    func choose(_ card: Card) {
         if (modal.choose(card)) {
             state = .over
         }

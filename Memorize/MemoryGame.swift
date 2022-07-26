@@ -10,7 +10,13 @@ import SwiftUI
 struct MemoryGame<CardContent> where CardContent: Equatable {
     private(set) var cards: Array<Card>
     
-    private var indexOfTheFaceUpCard: Int?
+    private var indexOfTheFaceUpCard: Int? {
+        // using computed property make program less buggy
+        // but it's also slower, I don't know which one is better
+        
+        get { cards.indices.filter({ cards[$0].isFaceUp}).theOnlyValue }
+        set { cards.indices.forEach({ cards[$0].isFaceUp = ($0 == newValue)}) }
+    }
 
     let title: String
     let color: Color
@@ -34,20 +40,14 @@ struct MemoryGame<CardContent> where CardContent: Equatable {
            !cards[chosenIndex].isFaceUp,
            !cards[chosenIndex].isMatched
         {
-            var isMatched = false
-            if let theOtherChosenIndex = indexOfTheFaceUpCard {
-                if cards[chosenIndex].content == cards[theOtherChosenIndex].content {
-                    [chosenIndex, theOtherChosenIndex].forEach { cards[$0].isMatched = true }
-                    isMatched = true
-                    numberOfExistingCards -= 1
-                    score += 2
-                } else {
-                    cards[theOtherChosenIndex].isFaceUp.toggle()
-                }
+            if let theOtherChosenIndex = indexOfTheFaceUpCard ,
+               cards[chosenIndex].content == cards[theOtherChosenIndex].content
+            {
+                [chosenIndex, theOtherChosenIndex].forEach { cards[$0].isMatched = true }
+                numberOfExistingCards -= 1
+                score += 2
             } else {
-                for i in cards.indices {
-                    cards[i].isFaceUp = false
-                }
+                indexOfTheFaceUpCard = chosenIndex
             }
 
             if (cards[chosenIndex].isFlipped) {
@@ -56,8 +56,6 @@ struct MemoryGame<CardContent> where CardContent: Equatable {
             tapCount += 1
 
             cards[chosenIndex].isFlipped = true
-            cards[chosenIndex].isFaceUp.toggle()
-            indexOfTheFaceUpCard = isMatched ? nil : chosenIndex
         }
         return numberOfExistingCards == 0
     }
@@ -66,8 +64,8 @@ struct MemoryGame<CardContent> where CardContent: Equatable {
         var isFaceUp: Bool = false
         var isMatched: Bool = false
         var isFlipped: Bool = false
-        var content: CardContent
-        var id: Int
+        let content: CardContent
+        let id: Int
     }
 }
 
@@ -84,5 +82,11 @@ struct Theme<Content> where Content: Equatable {
         themeName = name
         self.contents = contents
         self.color = color
+    }
+}
+
+extension Array {
+    var theOnlyValue: Element? {
+        self.count == 1 ? self.first : nil
     }
 }

@@ -1,5 +1,5 @@
 //
-//  ContentView.swift
+//  EmojiMemoryGameView.swift
 //  CS193P-Memorize
 //
 //  Created by LittleJian on 4/2/22.
@@ -8,14 +8,14 @@
 import SwiftUI
 
 struct EmojiMemoryGameView: View {
-    @ObservedObject var viewModel: EmojiMemoryGame
+    @ObservedObject var game: EmojiMemoryGame
 
     var body: some View {
         VStack {
-            switch viewModel.state {
-            case .start: GameStartView(viewModel: viewModel)
-            case .running: GameRunningView(viewModel: viewModel)
-            case .over: GameOverView(viewModel: viewModel)
+            switch game.state {
+            case .start: GameStartView(viewModel: game)
+            case .running: GameRunningView(viewModel: game)
+            case .over: GameOverView(viewModel: game)
             }
         }
     }
@@ -81,30 +81,42 @@ struct GameOverView: View {
 }
 
 struct CardView: View {
-    let card: MemoryGame<String>.Card
+    let card: EmojiMemoryGame.Card
     let color: Color
 
     var body: some View {
-        let shape = RoundedRectangle(cornerRadius: 25)
+        GeometryReader { geometry in
+            let shape = RoundedRectangle(cornerRadius: Constants.cornerRadius)
 
-        ZStack {
-            if card.isFaceUp {
-                shape.fill().foregroundColor(.white)
-                shape.strokeBorder(lineWidth: 3).foregroundColor(color)
-                Text(card.content).font(.largeTitle)
-            } else if card.isMatched {
-                shape.opacity(0)
-            } else {
-                shape.fill().foregroundColor(color)
+            ZStack {
+                if card.isMatched {
+                    shape.opacity(0)
+                } else if card.isFaceUp {
+                    shape.fill().foregroundColor(.white)
+                    shape.strokeBorder(lineWidth: Constants.lineWidth).foregroundColor(color)
+                    Text(card.content).font(adjust(to: geometry.size))
+                } else {
+                    shape.fill().foregroundColor(color)
+                }
             }
         }
+    }
+
+    private func adjust(to size: CGSize) -> Font {
+        .system(size: Constants.fontScale * min(size.width, size.height))
+    }
+    
+    private struct Constants {
+        static let cornerRadius: CGFloat = 25
+        static let lineWidth: CGFloat = 3
+        static let fontScale: CGFloat = 0.65
     }
 }
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         let game = EmojiMemoryGame()
-        EmojiMemoryGameView(viewModel: game)
+        EmojiMemoryGameView(game: game)
             .previewInterfaceOrientation(.portrait)
     }
 }
