@@ -42,7 +42,7 @@ class EmojiMemoryGame: ObservableObject {
 
     var tapCount: Int { modal.tapCount }
 
-    var card: Array<Card> { modal.cards }
+    var cards: Array<Card> { modal.cards }
     
     var title: String { modal.title }
 

@@ -49,17 +49,18 @@ struct GameRunningView: View {
             .onTapGesture {
                 viewModel.newGame()
             }
-        ScrollView {
-            LazyVGrid(columns: [GridItem(.adaptive(minimum: 80))]) {
-                ForEach(viewModel.card) { card in
-                    CardView(card: card, color: viewModel.color)
-                        .aspectRatio(2 / 3, contentMode: .fit)
-                        .onTapGesture {
-                            viewModel.choose(card)
-                        }
+        
+        AspectVGrid(items: viewModel.cards, aspectRatio: 2/3) { card in
+            CardView(card: card, color: viewModel.color)
+                .padding(Constants.cardPaddingLength)
+                .onTapGesture {
+                    viewModel.choose(card)
                 }
-            }.padding()
         }
+    }
+    
+    private class Constants {
+        static let cardPaddingLength: CGFloat = 8
     }
 }
 
@@ -93,6 +94,13 @@ struct CardView: View {
                     shape.opacity(0)
                 } else if card.isFaceUp {
                     shape.fill().foregroundColor(.white)
+                    
+                    Pie(startAngle: Angle(degrees: -90),
+                        endAngle: Angle(degrees: 20))
+                        .padding(Constants.ciclePaddingLength)
+                        .foregroundColor(color)
+                        .opacity(Constants.cicleOpacity)
+                    
                     shape.strokeBorder(lineWidth: Constants.lineWidth).foregroundColor(color)
                     Text(card.content).font(adjust(to: geometry.size))
                 } else {
@@ -107,16 +115,18 @@ struct CardView: View {
     }
     
     private struct Constants {
-        static let cornerRadius: CGFloat = 25
+        static let cornerRadius: CGFloat = 20
         static let lineWidth: CGFloat = 3
         static let fontScale: CGFloat = 0.65
+        static let ciclePaddingLength: CGFloat = 4.5
+        static let cicleOpacity: CGFloat = 0.5
     }
 }
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         let game = EmojiMemoryGame()
-        EmojiMemoryGameView(game: game)
-            .previewInterfaceOrientation(.portrait)
+        
+        return EmojiMemoryGameView(game: game)
     }
 }
